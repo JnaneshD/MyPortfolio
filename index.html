@@ -1,489 +1,199 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Jnanesh D - Senior Software Engineer specializing in React, Golang, Kubernetes, and REST API development. Building immersive web experiences and developer tools."
-    />
-    <meta name="author" content="Jnanesh D" />
-    <meta
-      name="keywords"
-      content="Software Engineer, React, Golang, Kubernetes, REST API, PowerShell, Developer"
-    />
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="description" content="Jnanesh D — Senior Software Engineer. Python, Golang, React, Kubernetes."/>
+  <title>Jnanesh D — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-logo">JD</a>
+  <div class="nav-links">
+    <a href="#work">Work</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
+  </div>
+  <div class="nav-right"><span class="nav-time" id="nav-clock">--:--</span><span class="nav-dot"></span></div>
+</nav>
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="Jnanesh D - Senior Software Engineer" />
-    <meta
-      property="og:description"
-      content="Senior Software Engineer specializing in React, Golang, Kubernetes, and REST API development."
-    />
-    <meta property="og:type" content="website" />
+<!-- HERO — full viewport -->
+<section class="hero" id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <p class="hero-tag">Senior Member of Technical Staff @ Oracle</p>
+    <h1 class="hero-h1">
+      <span class="hero-line" id="hero-line-1">Jnanesh D</span>
+      <span class="hero-line hero-tagline" id="hero-line-2">Engineering scalable software.</span>
+    </h1>
+    <p class="hero-sub" id="typewriter"></p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="#contact" class="btn-ghost">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="hero-scroll-line"></div></div>
+  <div class="hero-stats">
+    <div class="hstat"><span class="hstat-n" data-count="5">0</span><span class="hstat-s"></span><span class="hstat-l">Years</span></div>
+    <div class="hstat"><span class="hstat-n" data-count="10">0</span><span class="hstat-s"></span><span class="hstat-l">Projects</span></div>
+    <div class="hstat"><span class="hstat-n" data-count="3">0</span><span class="hstat-s"></span><span class="hstat-l">Companies</span></div>
+  </div>
+</section>
 
-    <title>Jnanesh D - Senior Software Engineer</title>
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <!-- Scroll Progress Bar -->
-    <div id="scroll-progress" class="scroll-progress"></div>
-
-    <!-- Cursor Glow -->
-    <div id="cursor-glow" class="cursor-glow"></div>
-
-    <!-- Navigation -->
-    <nav id="main-nav" class="nav">
-      <div class="nav-content">
-        <a href="#hero" class="nav-logo">JD</a>
-        <ul class="nav-links">
-          <li><a href="#about" class="nav-link">About</a></li>
-          <li><a href="#experience" class="nav-link">Experience</a></li>
-          <li><a href="#skills" class="nav-link">Skills</a></li>
-          <li><a href="#projects" class="nav-link">Projects</a></li>
-          <li><a href="#contact" class="nav-link">Contact</a></li>
-        </ul>
+<!-- ABOUT strip -->
+<section class="about-strip" id="work">
+  <div class="about-inner">
+    <div class="about-col">
+      <h2 class="sec-label">About</h2>
+      <p>I work across Python, Golang, React, and Kubernetes — making complex systems simple. Developer tools and automation are my sweet spot.</p>
+    </div>
+    <div class="about-col">
+      <h2 class="sec-label">Education</h2>
+      <p><strong>PES University</strong><br/>B.Tech CS · 2021</p>
+    </div>
+    <div class="about-col">
+      <h2 class="sec-label">Skills</h2>
+      <div class="pills" id="skill-pills">
+        <span class="pill hi">Python</span><span class="pill hi">Golang</span><span class="pill hi">JavaScript</span><span class="pill hi">PowerShell</span>
+        <span class="pill">React</span><span class="pill">Kubernetes</span><span class="pill">Docker</span><span class="pill">REST APIs</span><span class="pill">OpenAPI</span><span class="pill">Selenium</span><span class="pill">Postman</span><span class="pill">Locust</span><span class="pill">Azure</span>
       </div>
-    </nav>
+    </div>
+    <div class="about-col about-loc">
+      <div class="loc-pulse"></div>
+      <span>Bengaluru, India</span>
+      <span class="loc-clock" id="live-clock">--:--:-- IST</span>
+    </div>
+  </div>
+</section>
 
-    <!-- Hero Section -->
-    <section id="hero" class="hero section">
-        <canvas id="hero-canvas" class="hero-canvas"></canvas>
-        <div class="hero-content">
-            <div class="hero-text reveal">
-                <h1 class="hero-title">
-                    <span class="hero-title-line">Jnanesh D</span>
-                </h1>
-                <p class="hero-subtitle">Senior Member of Technical Staff</p>
-                <p class="hero-location">Based in Bengaluru, India</p>
-                <p class="hero-description">I build tools that make developers' lives easier. Currently working on diagnostic systems at Oracle, where I get to solve interesting problems in Python and help keep massive database infrastructures healthy.</p>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-number">5+</span>
-                        <span class="stat-label">Years Experience</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">10+</span>
-                        <span class="stat-label">Projects Delivered</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">3</span>
-                        <span class="stat-label">Companies</span>
-                    </div>
-                </div>
-            </div>
-            <div class="scroll-indicator">
-                <span class="scroll-text">Scroll</span>
-                <div class="scroll-line"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about section">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="section-number">01</span>
-          <h2 class="section-title">About</h2>
-        </div>
-        <div class="about-content reveal">
-          <div class="about-text">
-            <p class="about-paragraph">
-              I like solving problems that are technically interesting and actually useful. My journey started with Android development
-              at TCS, moved to building automation frameworks and REST APIs at Commvault, and now I'm optimizing diagnostic systems
-              at Oracle using Python.
-            </p>
-            <p class="about-paragraph">
-              I work across the full stack—Python, Golang, React, Kubernetes—but what really drives me is making complex systems
-              simple to use. Developer tools and automation are my sweet spot because they directly help engineers build better software.
-            </p>
-            <div class="about-education">
-              <h3 class="about-education-title">Education</h3>
-              <p class="about-education-detail">
-                <strong>PES University</strong><br />
-                Bachelor of Technology, Computer Science<br />
-                Graduated 2021
-              </p>
-            </div>
-          </div>
+<!-- EXPERIENCE — expandable accordion -->
+<section class="section" id="experience">
+  <div class="sec-inner">
+    <h2 class="sec-heading">Experience</h2>
+    <div class="exp-list">
+      <div class="exp" data-exp>
+        <button class="exp-head"><span class="exp-role">Senior Member of Technical Staff</span><span class="exp-meta">Oracle · Mar 2025 – Present</span><span class="exp-toggle">+</span></button>
+        <div class="exp-body">
+          <ul>
+            <li>Reduced exachk collection size by 20% and cut runtime by 25% by introducing parallelism, significantly improving diagnostic efficiency across Oracle Exadata environments</li>
+            <li>Redesigned core diagnostic modules and health checks in Python, improving unit test coverage by 10% and raising overall framework reliability</li>
+            <li>Built an LLM-powered diagnostic agent using LangChain with web search and tool-calling capabilities, enabling automated AHF command execution and real-time documentation lookup to accelerate root cause analysis</li>
+            <li>Engineered Codex-based developer tooling integrated into the AHF diagnostic workflow, saving ∼5 hrs/week per engineer in manual triage tasks</li>
+          </ul>
         </div>
       </div>
-    </section>
-
-    <!-- Experience Section -->
-    <section id="experience" class="experience section">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="section-number">02</span>
-          <h2 class="section-title">Experience</h2>
-        </div>
-        <div class="experience-timeline">
-
-          <div class="experience-item reveal">
-            <div class="experience-period">Mar 2025 - Present</div>
-            <div class="experience-content">
-              <h3 class="experience-role">Senior Member of Technical Staff</h3>
-              <p class="experience-company">Oracle · Full-time · Bengaluru, India</p>
-              <ul class="experience-highlights">
-                <li>Working on the AHF (Autonomous Health Framework) team solving diagnostic problems</li>
-                <li>Optimizing exachk framework performance using Python</li>
-                <li>Developing and maintaining diagnostic tools for Oracle database systems</li>
-                <li>Implementing performance improvements and automation solutions</li>
-                <li>Contributing to system health monitoring and analysis tools</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="experience-item reveal">
-            <div class="experience-period">Jan 2024 - Mar 2025</div>
-            <div class="experience-content">
-              <h3 class="experience-role">Senior Software Engineer</h3>
-              <p class="experience-company">Commvault · Full-time · Bengaluru, India</p>
-              <ul class="experience-highlights">
-                <li>Developed a new internal staging portal using React, Golang, and Kubernetes</li>
-                <li>Utilized Kubernetes and Docker containers for staging deployments, significantly reducing VM costs</li>
-                <li>Designed, developed, and maintained comprehensive REST API documentation using Docusaurus with custom React components</li>
-                <li>Designed and developed a Developer Portal using Docusaurus, including React customizations</li>
-                <li>Designed and maintained PowerShell SDKs</li>
-                <li>Conducted in-depth testing for major projects in Network, AI and REST APIs</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="experience-item reveal">
-            <div class="experience-period">Nov 2021 - Jan 2024</div>
-            <div class="experience-content">
-              <h3 class="experience-role">Engineer</h3>
-              <p class="experience-company">Commvault · Full-time · Bengaluru, India</p>
-              <ul class="experience-highlights">
-                <li>Developed REST APIs for Commvault Cloud DB onboarding</li>
-                <li>Took ownership of the Commvault PowerShell SDK</li>
-                <li>Enhanced the SDK by introducing new cmdlets and SDKs based on the OpenAPI specification</li>
-                <li>Built an automation framework for performance testing in Commvault Command Center</li>
-                <li>Led network feature regression testing, feature release testing, and automation enhancements</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="experience-item reveal">
-            <div class="experience-period">Jul 2021 - Nov 2021</div>
-            <div class="experience-content">
-              <h3 class="experience-role">Associate Engineer</h3>
-              <p class="experience-company">Commvault · Full-time · Bengaluru, India</p>
-              <ul class="experience-highlights">
-                <li>Automated REST API testing using Postman collections and Newman</li>
-                <li>Enhanced the load testing framework for REST APIs using the Locust framework in Python</li>
-                <li>Subject Matter Expert (SME) for Commvault Network</li>
-                <li>Developed PowerShell scripts for various automation tasks</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="experience-item reveal">
-            <div class="experience-period">Jan 2021 - Jul 2021</div>
-            <div class="experience-content">
-              <h3 class="experience-role">Intern, Development</h3>
-              <p class="experience-company">Commvault · Internship · Bengaluru, India</p>
-              <ul class="experience-highlights">
-                <li>Automated test cases related to Commvault Network features</li>
-                <li>Developed web automation scripts using Selenium and Python for acceptance testing</li>
-                <li>Conducted regression testing for service pack releases</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="experience-item reveal">
-            <div class="experience-period">Jun 2019 - Aug 2019</div>
-            <div class="experience-content">
-              <h3 class="experience-role">Summer Intern</h3>
-              <p class="experience-company">Tata Consultancy Services · Internship · Bengaluru, India</p>
-              <ul class="experience-highlights">
-                <li>Developed an Android application for a smart watch as part of a research project</li>
-                <li>Implemented UI designs into the application</li>
-                <li>Integrated graphs to display readings from a physical device</li>
-                <li>Integrated reports for representing saved data from the device</li>
-              </ul>
-            </div>
-          </div>
-
+      <div class="exp" data-exp>
+        <button class="exp-head"><span class="exp-role">Senior Engineer</span><span class="exp-meta">Commvault · Jan 2024 – Mar 2025</span><span class="exp-toggle">+</span></button>
+        <div class="exp-body">
+          <ul>
+            <li>Engineered an internal portal for staging, reducing VM costs by 30% through Kubernetes-based resource optimization</li>
+            <li>Built and launched 15+ new APIs with OpenAPI standards, reducing critical workload integration time by 25%</li>
+            <li>Architected SDKs in Python and PowerShell, increasing API adoption among clients by 50%</li>
+            <li>Mentored 3 engineers across IST/EST time zones; 2 interns converted to full-time and 1 lateral hire onboarded within 30 days</li>
+          </ul>
         </div>
       </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="skills section">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="section-number">03</span>
-          <h2 class="section-title">Skills</h2>
-        </div>
-        <div class="skills-grid">
-          <div class="skill-category reveal">
-            <h3 class="skill-category-title">Programming Languages</h3>
-            <ul class="skill-list">
-              <li class="skill-item">Python</li>
-              <li class="skill-item">Golang</li>
-              <li class="skill-item">JavaScript</li>
-              <li class="skill-item">PowerShell</li>
-            </ul>
-          </div>
-          <div class="skill-category reveal">
-            <h3 class="skill-category-title">Frameworks &amp; Tools</h3>
-            <ul class="skill-list">
-              <li class="skill-item">React</li>
-              <li class="skill-item">Kubernetes</li>
-              <li class="skill-item">Docker</li>
-              <li class="skill-item">Selenium</li>
-              <li class="skill-item">Postman</li>
-              <li class="skill-item">Locust</li>
-            </ul>
-          </div>
-          <div class="skill-category reveal">
-            <h3 class="skill-category-title">Cloud Technologies</h3>
-            <ul class="skill-list">
-              <li class="skill-item">Microsoft Azure</li>
-            </ul>
-          </div>
-          <div class="skill-category reveal">
-            <h3 class="skill-category-title">API Development</h3>
-            <ul class="skill-list">
-              <li class="skill-item">RESTful APIs</li>
-              <li class="skill-item">OpenAPI Specification</li>
-            </ul>
-          </div>
-          <div class="skill-category reveal">
-            <h3 class="skill-category-title">Automation &amp; Scripting</h3>
-            <ul class="skill-list">
-              <li class="skill-item">PowerShell Automation</li>
-              <li class="skill-item">Python Automation</li>
-            </ul>
-          </div>
+      <div class="exp" data-exp>
+        <button class="exp-head"><span class="exp-role">Engineer</span><span class="exp-meta">Commvault · Jun 2021 – Jan 2024</span><span class="exp-toggle">+</span></button>
+        <div class="exp-body">
+          <ul>
+            <li>Spearheaded the creation of a new automation framework, reducing API and UI testing time by 60% and increasing test coverage by 40%</li>
+            <li>Scripted 50+ automated test cases using Python for Network and REST APIs, reducing manual testing effort by 75%</li>
+            <li>Optimized PowerShell SDKs and established CI/CD pipelines, reducing deployment time by 50% and improving release frequency by 30%</li>
+          </ul>
         </div>
       </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="projects section">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="section-number">04</span>
-          <h2 class="section-title">Projects</h2>
-        </div>
-        <div class="projects-grid">
-
-          <!-- api.commvault.com -->
-          <div class="project-card reveal featured-project">
-            <a href="https://api.commvault.com" target="_blank" rel="noopener noreferrer" class="project-link">
-              <div class="project-header">
-                <span class="project-badge">Author &amp; Maintainer</span>
-                <span class="project-external">↗</span>
-              </div>
-              <h3 class="project-title">api.commvault.com</h3>
-              <p class="project-description">
-                Designed, authored, and maintained the official Commvault REST API documentation portal.
-                Built with Docusaurus and custom React components, providing comprehensive API references,
-                interactive examples, and developer guides for Commvault's enterprise platform.
-              </p>
-              <div class="project-tech">
-                <span class="tech-tag">Docusaurus</span>
-                <span class="tech-tag">React</span>
-                <span class="tech-tag">OpenAPI</span>
-                <span class="tech-tag">REST API Docs</span>
-              </div>
-            </a>
-          </div>
-
-          <!-- developer.commvault.com -->
-          <div class="project-card reveal featured-project">
-            <a href="https://developer.commvault.com" target="_blank" rel="noopener noreferrer" class="project-link">
-              <div class="project-header">
-                <span class="project-badge">Author &amp; Maintainer</span>
-                <span class="project-external">↗</span>
-              </div>
-              <h3 class="project-title">developer.commvault.com</h3>
-              <p class="project-description">
-                Built and maintained the official Commvault Developer Portal — a central hub for developers
-                integrating with Commvault. Includes SDKs, code samples, getting-started guides, and
-                deep-dive technical references. Crafted with Docusaurus and custom React customizations.
-              </p>
-              <div class="project-tech">
-                <span class="tech-tag">Docusaurus</span>
-                <span class="tech-tag">React</span>
-                <span class="tech-tag">Developer Experience</span>
-                <span class="tech-tag">Technical Writing</span>
-              </div>
-            </a>
-          </div>
-
-          <!-- CVPowerShellSDK -->
-          <div class="project-card reveal featured-project">
-            <a href="https://github.com/Commvault/CVPowershellSDKV2" target="_blank" rel="noopener noreferrer" class="project-link">
-              <div class="project-header">
-                <span class="project-badge">Author &amp; Maintainer</span>
-                <span class="project-external">↗</span>
-              </div>
-              <h3 class="project-title">CVPowerShellSDK</h3>
-              <p class="project-description">
-                Authored and maintained the official Commvault PowerShell SDK — a comprehensive library
-                enabling Windows administrators and DevOps engineers to automate Commvault operations.
-                Built new cmdlets from the OpenAPI specification and drove adoption across enterprise customers.
-              </p>
-              <div class="project-tech">
-                <span class="tech-tag">PowerShell</span>
-                <span class="tech-tag">OpenAPI</span>
-                <span class="tech-tag">SDK Design</span>
-                <span class="tech-tag">Automation</span>
-              </div>
-            </a>
-          </div>
-
-          <!-- httpc -->
-          <div class="project-card reveal">
-            <a href="https://github.com/JnaneshD/httpc" target="_blank" rel="noopener noreferrer" class="project-link">
-              <div class="project-header">
-                <span class="project-external">↗</span>
-              </div>
-              <h3 class="project-title">httpc - HTTP Client for Go</h3>
-              <p class="project-description">
-                A fluent, batteries-included HTTP client wrapper for Go. Features retries, circuit breakers,
-                rate limiting, and comprehensive testing utilities. Production-ready with sensible defaults
-                and gradual complexity.
-              </p>
-              <div class="project-tech">
-                <span class="tech-tag">Golang</span>
-                <span class="tech-tag">HTTP Client</span>
-                <span class="tech-tag">Resilience</span>
-                <span class="tech-tag">Testing</span>
-              </div>
-            </a>
-          </div>
-
-          <!-- Buying Decision -->
-          <div class="project-card reveal">
-            <a href="https://github.com/JnaneshD/buying-decision" target="_blank" rel="noopener noreferrer" class="project-link">
-              <div class="project-header">
-                <span class="project-external">↗</span>
-              </div>
-              <h3 class="project-title">Buying Decision App</h3>
-              <p class="project-description">
-                A web app that helps prevent impulsive purchases by converting prices into work time.
-                Features multi-currency support, wishlist management, and celebratory animations.
-                100% private with local storage.
-              </p>
-              <div class="project-tech">
-                <span class="tech-tag">JavaScript</span>
-                <span class="tech-tag">HTML/CSS</span>
-                <span class="tech-tag">LocalStorage</span>
-                <span class="tech-tag">Responsive</span>
-              </div>
-            </a>
-          </div>
-
-          <!-- Internal Staging Portal -->
-          <div class="project-card reveal">
-            <div class="project-header"></div>
-            <h3 class="project-title">Internal Staging Portal</h3>
-            <p class="project-description">
-              A comprehensive staging portal built with React and Golang, utilizing Kubernetes for
-              container orchestration. Reduced infrastructure costs by replacing VM-based deployments
-              with containerized solutions.
-            </p>
-            <div class="project-tech">
-              <span class="tech-tag">React</span>
-              <span class="tech-tag">Golang</span>
-              <span class="tech-tag">Kubernetes</span>
-              <span class="tech-tag">Docker</span>
-            </div>
-          </div>
-
-          <!-- Automation Framework -->
-          <div class="project-card reveal">
-            <div class="project-header"></div>
-            <h3 class="project-title">Automation Framework</h3>
-            <p class="project-description">
-              Performance testing automation framework for Commvault Command Center. Includes load testing
-              capabilities using Locust and comprehensive REST API testing.
-            </p>
-            <div class="project-tech">
-              <span class="tech-tag">Python</span>
-              <span class="tech-tag">Locust</span>
-              <span class="tech-tag">Postman</span>
-              <span class="tech-tag">Newman</span>
-            </div>
-          </div>
-
+      <div class="exp" data-exp>
+        <button class="exp-head"><span class="exp-role">Software Intern</span><span class="exp-meta">TCS Innovation Lab · Jun 2019 – Aug 2019</span><span class="exp-toggle">+</span></button>
+        <div class="exp-body">
+          <ul>
+            <li>Built 3 core features and 10+ UI screens for a smartwatch Android prototype during an 8-week internship</li>
+          </ul>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact section">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="section-number">05</span>
-          <h2 class="section-title">Contact</h2>
-        </div>
-        <div class="contact-content reveal">
-          <p class="contact-text">
-            I'm always interested in hearing about new projects and opportunities.
-            Feel free to reach out if you'd like to connect.
-          </p>
-          <div class="contact-links">
-            <a href="https://www.linkedin.com/in/jnanesh-d/" target="_blank" rel="noopener noreferrer" class="contact-link" id="linkedin-link">
-              <span class="contact-link-text">LinkedIn</span>
-              <span class="contact-link-arrow">→</span>
-            </a>
-            <a href="https://github.com/jnaneshd" target="_blank" rel="noopener noreferrer" class="contact-link" id="github-link">
-              <span class="contact-link-text">GitHub</span>
-              <span class="contact-link-arrow">→</span>
-            </a>
-            <a href="mailto:jnaneshdana@gmail.com" class="contact-link" id="email-link">
-              <span class="contact-link-text">Email</span>
-              <span class="contact-link-arrow">→</span>
-            </a>
-          </div>
+<!-- PROJECTS — big interactive cards -->
+<section class="section section-dark" id="projects">
+  <div class="sec-inner">
+    <h2 class="sec-heading light">Projects</h2>
+    <div class="proj-grid">
+      <a href="https://api.commvault.com" target="_blank" class="proj-card big" data-tilt>
+        <span class="proj-badge">Author & Maintainer</span>
+        <h3>api.commvault.com</h3>
+        <p>Official Commvault REST API documentation portal. Docusaurus + custom React components, interactive examples, developer guides.</p>
+        <div class="proj-tags"><span>Docusaurus</span><span>React</span><span>OpenAPI</span></div><span class="proj-arrow">↗</span>
+      </a>
+      <a href="https://developer.commvault.com" target="_blank" class="proj-card big" data-tilt>
+        <span class="proj-badge">Author & Maintainer</span>
+        <h3>developer.commvault.com</h3>
+        <p>Developer Portal — SDKs, code samples, getting-started guides. Docusaurus + React customizations.</p>
+        <div class="proj-tags"><span>Docusaurus</span><span>React</span><span>DX</span></div><span class="proj-arrow">↗</span>
+      </a>
+      <a href="https://github.com/Commvault/CVPowershellSDKV2" target="_blank" class="proj-card" data-tilt>
+        <span class="proj-badge">Author & Maintainer</span>
+        <h3>CVPowerShellSDK</h3>
+        <p>Official PowerShell SDK for Commvault automation from OpenAPI spec.</p>
+        <div class="proj-tags"><span>PowerShell</span><span>OpenAPI</span><span>SDK</span></div><span class="proj-arrow">↗</span>
+      </a>
+      <a href="https://github.com/jnaneshd/rmm" target="_blank" class="proj-card" data-tilt>
+        <h3>RMM</h3>
+        <p>Lightweight remote management platform — connect, monitor and dispatch jobs to agents via WebSockets.</p>
+        <div class="proj-tags"><span>Golang</span><span>JavaScript</span><span>WebSocket</span><span>PostgreSQL</span></div><span class="proj-arrow">↗</span>
+      </a>
+      <a href="https://github.com/JnaneshD/httpc" target="_blank" class="proj-card" data-tilt>
+        <h3>httpc</h3>
+        <p>Fluent HTTP client for Go with retries, circuit breakers, rate limiting.</p>
+        <div class="proj-tags"><span>Golang</span><span>HTTP</span><span>Resilience</span></div><span class="proj-arrow">↗</span>
+      </a>
+      <a href="https://github.com/JnaneshD/buying-decision" target="_blank" class="proj-card" data-tilt>
+        <h3>Buying Decision</h3>
+        <p>Converts prices to work-hours to prevent impulse purchases.</p>
+        <div class="proj-tags"><span>JavaScript</span><span>LocalStorage</span></div><span class="proj-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
 
-          <div class="contact-form-section">
-            <h3 class="contact-form-title">Send me a message</h3>
-            <form id="contact-form" class="contact-form" action="https://api.postcatch.io/submit/65d7ad13-1be7-4cf6-bee3-3fd9f8769727" method="POST">
-              <div class="form-group">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" id="name" name="name" class="form-input" required>
-              </div>
-              <div class="form-group">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" id="email" name="email" class="form-input" required>
-              </div>
-              <div class="form-group">
-                <label for="message" class="form-label">Message</label>
-                <textarea id="message" name="message" class="form-textarea" rows="5" required></textarea>
-              </div>
-              <button type="submit" class="form-submit" id="submit-btn">
-                <span class="submit-text">Send Message</span>
-                <span class="submit-arrow">→</span>
-              </button>
-              <div id="form-status" class="form-status"></div>
-            </form>
-          </div>
-        </div>
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="sec-inner contact-inner">
+    <div class="contact-left">
+      <h2 class="sec-heading">Let's work<br/>together.</h2>
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/jnanesh-d/" target="_blank" class="c-link">LinkedIn <span>↗</span></a>
+        <a href="https://github.com/jnaneshd" target="_blank" class="c-link">GitHub <span>↗</span></a>
+        <a href="mailto:jnaneshdana@gmail.com" class="c-link">jnaneshdana@gmail.com <span>→</span></a>
       </div>
-    </section>
+    </div>
+    <form id="contact-form" class="c-form" action="https://api.postcatch.io/submit/65d7ad13-1be7-4cf6-bee3-3fd9f8769727" method="POST">
+      <input type="text" name="name" placeholder="Your name" class="c-input" required/>
+      <input type="email" name="email" placeholder="Your email" class="c-input" required/>
+      <textarea name="message" placeholder="Your message" class="c-input c-ta" rows="4" required></textarea>
+      <button type="submit" class="btn-primary" id="submit-btn"><span class="submit-text">Send Message</span> →</button>
+      <div id="form-status" class="form-status"></div>
+    </form>
+  </div>
+</section>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <p class="footer-text">© 2026 Jnanesh D. All rights reserved.</p>
-      </div>
-    </footer>
+<!-- MODAL OVERLAY -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-backdrop" id="modal-backdrop"></div>
+  <div class="modal-box" id="modal-box">
+    <button class="modal-close" id="modal-close">×</button>
+    <div class="modal-content" id="modal-content">
+      <!-- Dynamic content goes here -->
+    </div>
+    <div class="modal-footer" id="modal-footer">
+      <a href="#" target="_blank" class="btn-primary" id="modal-action">Visit Project</a>
+    </div>
+  </div>
+</div>
 
-    <script src="script.js"></script>
-  </body>
+<footer class="footer"><p>© 2026 Jnanesh D</p></footer>
+<script src="script.js"></script>
+</body>
 </html>
