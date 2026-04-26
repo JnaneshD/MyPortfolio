@@ -1,71 +1,219 @@
-// === Scroll Progress Bar ===
-const scrollBar = document.getElementById('scroll-progress');
+// ============================================
+// 1. LENIS — Buttery Smooth Scroll
+// ============================================
+const lenis = new Lenis({ duration: 1.4, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smooth: true, smoothTouch: false });
+function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+requestAnimationFrame(raf);
+// Sync Lenis with GSAP ScrollTrigger
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add(time => lenis.raf(time * 1000));
+gsap.ticker.lagSmoothing(0);
+
+// ============================================
+// 2. PRELOADER — Cinematic Entrance
+// ============================================
+const preloader = document.getElementById('preloader');
+window.addEventListener('load', () => {
+    const tl = gsap.timeline({ onComplete: () => { preloader.classList.add('done'); setTimeout(() => preloader.style.display = 'none', 600); initHeroAnimations(); } });
+    tl.to('.preloader-line', { opacity: 1, duration: 0.6, ease: 'power2.out' })
+      .to('.preloader-sub', { opacity: 1, duration: 0.4, ease: 'power2.out' }, '-=0.2')
+      .to('.preloader-line', { opacity: 0, y: -30, duration: 0.5, ease: 'power3.in', delay: 0.6 })
+      .to('.preloader-sub', { opacity: 0, y: -15, duration: 0.3, ease: 'power3.in' }, '-=0.35')
+      .to(preloader, { opacity: 0, duration: 0.5, ease: 'power2.inOut' });
+});
+
+// ============================================
+// 3. HERO — Split Text Character Animation
+// ============================================
+function initHeroAnimations() {
+    // Split title into chars
+    const titleEl = document.querySelector('[data-split]');
+    if (titleEl) {
+        const text = titleEl.textContent;
+        titleEl.innerHTML = '';
+        text.split('').forEach(ch => {
+            const span = document.createElement('span');
+            span.className = 'char';
+            span.textContent = ch === ' ' ? '\u00A0' : ch;
+            // Gradient on each char
+            span.style.background = 'linear-gradient(135deg, #fff 0%, #c4c4e8 50%, #8b8bc8 100%)';
+            span.style.webkitBackgroundClip = 'text';
+            span.style.webkitTextFillColor = 'transparent';
+            span.style.backgroundClip = 'text';
+            titleEl.appendChild(span);
+        });
+        gsap.to('.hero-title .char', { opacity: 1, y: 0, duration: 0.8, stagger: 0.04, ease: 'power3.out', delay: 0.1 });
+    }
+
+    // Stagger hero reveals
+    gsap.to('.hero-reveal', { opacity: 1, y: 0, duration: 0.9, stagger: 0.15, ease: 'power3.out', delay: 0.6,
+        onStart: function() { document.querySelectorAll('.hero-reveal').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(25px)'; }); }
+    });
+    // Set initial state for hero-reveal elements
+    document.querySelectorAll('.hero-reveal').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(25px)'; });
+
+    // Stat counter
+    document.querySelectorAll('.stat-number[data-count]').forEach(el => {
+        const target = parseInt(el.dataset.count);
+        gsap.to({ val: 0 }, { val: target, duration: 1.6, ease: 'power2.out', delay: 1.2,
+            onUpdate: function() { el.textContent = Math.round(this.targets()[0].val); }
+        });
+    });
+}
+
+// ============================================
+// 4. SCROLL PROGRESS BAR
+// ============================================
+const bar = document.getElementById('scroll-progress');
 window.addEventListener('scroll', () => {
     const pct = (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-    if (scrollBar) scrollBar.style.width = pct + '%';
+    if (bar) bar.style.width = pct + '%';
 }, { passive: true });
 
-// === Nav scroll effect ===
+// ============================================
+// 5. NAV — Scroll + Active Link
+// ============================================
 const nav = document.getElementById('main-nav');
-window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.pageYOffset > 100);
-}, { passive: true });
-
-// === Active nav link ===
 const sections = document.querySelectorAll('.section');
 const navLinks = document.querySelectorAll('.nav-link');
-const updateActiveLink = () => {
+
+window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.pageYOffset > 80);
     let cur = '';
     sections.forEach(s => { if (window.pageYOffset >= s.offsetTop - 200) cur = s.id; });
-    navLinks.forEach(l => { l.classList.toggle('active', l.getAttribute('href') === '#' + cur); });
-};
-window.addEventListener('scroll', updateActiveLink, { passive: true });
+    navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + cur));
+}, { passive: true });
 
-// === Smooth scroll nav ===
 navLinks.forEach(link => {
     link.addEventListener('click', e => {
         e.preventDefault();
         const t = document.querySelector(link.getAttribute('href'));
-        if (t) window.scrollTo({ top: t.offsetTop - 80, behavior: 'smooth' });
+        if (t) lenis.scrollTo(t, { offset: -80, duration: 1.8 });
     });
 });
 
-// === Reveal on scroll ===
-const obsOpts = { threshold: 0.12, rootMargin: '0px 0px -60px 0px' };
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
-}, obsOpts);
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+// ============================================
+// 6. GSAP SCROLL ANIMATIONS
+// ============================================
+gsap.registerPlugin(ScrollTrigger);
+
+// Section title clip-path reveal
+document.querySelectorAll('[data-scroll-reveal]').forEach(el => {
+    if (el.classList.contains('section-title')) {
+        ScrollTrigger.create({
+            trigger: el, start: 'top 85%',
+            onEnter: () => el.classList.add('revealed')
+        });
+    } else {
+        gsap.from(el, {
+            scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' },
+            opacity: 0, y: 50, duration: 0.9, ease: 'power3.out'
+        });
+    }
 });
 
-// === Experience stagger ===
-const expObs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-        if (e.isIntersecting) {
-            e.target.classList.add('active');
-            e.target.querySelectorAll('.experience-highlights li').forEach((li, i) => {
-                setTimeout(() => { li.style.opacity = '1'; li.style.transform = 'translateX(0)'; }, i * 80);
+// Experience items — stagger in
+document.querySelectorAll('.experience-item').forEach((item, i) => {
+    gsap.to(item, {
+        scrollTrigger: { trigger: item, start: 'top 85%' },
+        opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: i * 0.05,
+        onComplete: () => {
+            item.querySelectorAll('.experience-highlights li').forEach((li, j) => {
+                gsap.to(li, { opacity: 1, x: 0, duration: 0.4, delay: j * 0.06, ease: 'power2.out' });
             });
         }
     });
-}, obsOpts);
-document.querySelectorAll('.experience-item').forEach(el => expObs.observe(el));
+    // Set initial li state
+    item.querySelectorAll('.experience-highlights li').forEach(li => { gsap.set(li, { opacity: 0, x: -15 }); });
+});
 
-// === Skills stagger ===
-const skillObs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-        if (e.isIntersecting) {
-            e.target.classList.add('active');
-            e.target.querySelectorAll('.skill-item').forEach((li, i) => {
-                setTimeout(() => { li.style.opacity = '1'; li.style.transform = 'translateX(0)'; }, i * 60);
-            });
+// Skill categories
+document.querySelectorAll('.skill-category').forEach((cat, i) => {
+    gsap.to(cat, {
+        scrollTrigger: { trigger: cat, start: 'top 88%' },
+        opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', delay: i * 0.08
+    });
+});
+
+// ============================================
+// 7. HERO CANVAS — Flowing Gradient Mesh
+// ============================================
+const canvas = document.getElementById('hero-canvas');
+if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let w, h, t = 0;
+    const resize = () => { w = canvas.width = canvas.offsetWidth; h = canvas.height = canvas.offsetHeight; };
+    window.addEventListener('resize', resize); resize();
+
+    const blobs = [
+        { hue: 255, x: 0.15, y: 0.25, r: 0.35, sx: 0.12, sy: 0.10 },
+        { hue: 225, x: 0.75, y: 0.55, r: 0.30, sx: -0.08, sy: 0.15 },
+        { hue: 280, x: 0.50, y: 0.15, r: 0.25, sx: 0.06, sy: -0.11 },
+        { hue: 210, x: 0.85, y: 0.20, r: 0.22, sx: -0.10, sy: 0.07 },
+    ];
+
+    function drawBlob(b) {
+        const cx = (b.x + Math.sin(t * b.sx) * 0.12 + Math.cos(t * b.sy * 0.7) * 0.06) * w;
+        const cy = (b.y + Math.cos(t * b.sy) * 0.10 + Math.sin(t * b.sx * 0.5) * 0.05) * h;
+        const r = b.r * Math.min(w, h);
+        const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+        g.addColorStop(0, `hsla(${b.hue}, 70%, 55%, 0.10)`);
+        g.addColorStop(0.4, `hsla(${b.hue}, 60%, 45%, 0.04)`);
+        g.addColorStop(1, 'transparent');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    (function animate() {
+        ctx.clearRect(0, 0, w, h);
+        t += 0.004;
+        blobs.forEach(drawBlob);
+        requestAnimationFrame(animate);
+    })();
+}
+
+// ============================================
+// 8. HERO PARALLAX
+// ============================================
+const heroContent = document.querySelector('.hero-content');
+const heroSection = document.querySelector('.hero');
+window.addEventListener('scroll', () => {
+    if (!heroContent || !heroSection) return;
+    const s = window.pageYOffset, hh = heroSection.offsetHeight;
+    if (s < hh) {
+        heroContent.style.transform = `translateY(${s * 0.35}px)`;
+        heroContent.style.opacity = 1 - (s / hh) * 1.2;
+    }
+}, { passive: true });
+
+// ============================================
+// 9. HORIZONTAL SCROLL — Projects
+// ============================================
+const track = document.getElementById('projects-track');
+if (track && window.innerWidth > 768) {
+    const cards = track.querySelectorAll('.project-card');
+    const totalScroll = track.scrollWidth - window.innerWidth + 100;
+
+    gsap.to(track, {
+        x: () => -totalScroll,
+        ease: 'none',
+        scrollTrigger: {
+            trigger: '.projects',
+            start: 'top top',
+            end: () => '+=' + totalScroll,
+            pin: true,
+            scrub: 1.2,
+            invalidateOnRefresh: true,
+            anticipatePin: 1,
         }
     });
-}, obsOpts);
-document.querySelectorAll('.skill-category').forEach(el => skillObs.observe(el));
+}
 
-// === Project card spotlight (mouse-position radial glow via CSS vars) ===
+// ============================================
+// 10. CARD SPOTLIGHT (mouse glow)
+// ============================================
 document.querySelectorAll('.project-card').forEach(card => {
     card.addEventListener('mousemove', e => {
         const r = card.getBoundingClientRect();
@@ -74,125 +222,20 @@ document.querySelectorAll('.project-card').forEach(card => {
     });
 });
 
-// === Hero canvas — flowing aurora mesh gradient ===
-const canvas = document.getElementById('hero-canvas');
-if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let w, h, time = 0;
-
-    const resize = () => { w = canvas.width = canvas.offsetWidth; h = canvas.height = canvas.offsetHeight; };
-    window.addEventListener('resize', resize);
-    resize();
-
-    // Orb class — large soft-edged blobs that drift
-    class Orb {
-        constructor(hue, sat, x, y, radius, vx, vy) {
-            this.hue = hue; this.sat = sat;
-            this.x = x; this.y = y; this.r = radius;
-            this.ox = x; this.oy = y;
-            this.vx = vx; this.vy = vy;
-        }
-        update(t) {
-            this.x = this.ox + Math.sin(t * this.vx) * 120 + Math.cos(t * this.vy * 0.7) * 80;
-            this.y = this.oy + Math.cos(t * this.vy) * 100 + Math.sin(t * this.vx * 0.5) * 60;
-        }
-        draw(ctx) {
-            const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r);
-            g.addColorStop(0, `hsla(${this.hue}, ${this.sat}%, 60%, 0.12)`);
-            g.addColorStop(0.5, `hsla(${this.hue}, ${this.sat}%, 50%, 0.04)`);
-            g.addColorStop(1, 'transparent');
-            ctx.fillStyle = g;
-            ctx.fillRect(this.x - this.r, this.y - this.r, this.r * 2, this.r * 2);
-        }
-    }
-
-    const orbs = [
-        new Orb(250, 70, w * 0.2, h * 0.3, 400, 0.15, 0.12),
-        new Orb(220, 60, w * 0.7, h * 0.5, 350, -0.1, 0.18),
-        new Orb(280, 50, w * 0.5, h * 0.2, 300, 0.08, -0.14),
-        new Orb(200, 65, w * 0.8, h * 0.15, 280, -0.12, 0.09),
-    ];
-
-    const animate = () => {
-        ctx.clearRect(0, 0, w, h);
-        time += 0.003;
-        orbs.forEach(o => { o.update(time); o.draw(ctx); });
-        requestAnimationFrame(animate);
-    };
-    animate();
-    window.addEventListener('resize', () => {
-        orbs[0].ox = w * 0.2; orbs[0].oy = h * 0.3;
-        orbs[1].ox = w * 0.7; orbs[1].oy = h * 0.5;
-        orbs[2].ox = w * 0.5; orbs[2].oy = h * 0.2;
-        orbs[3].ox = w * 0.8; orbs[3].oy = h * 0.15;
-    });
-}
-
-// === Hero parallax ===
-const heroSection = document.querySelector('.hero');
-const heroContent = document.querySelector('.hero-content');
-window.addEventListener('scroll', () => {
-    if (!heroSection || !heroContent) return;
-    const s = window.pageYOffset, hh = heroSection.offsetHeight;
-    if (s < hh) {
-        heroContent.style.transform = `translateY(${s * 0.3}px)`;
-        heroContent.style.opacity = 1 - (s / hh) * 1.1;
-    }
-}, { passive: true });
-
-// === Stat counter animation ===
-const statObs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-        if (!e.isIntersecting) return;
-        const el = e.target.querySelector('.stat-number');
-        if (!el || el.dataset.done) return;
-        el.dataset.done = '1';
-        const txt = el.textContent.trim(), num = parseFloat(txt), sfx = txt.replace(String(num), '');
-        if (isNaN(num)) return;
-        const start = performance.now(), dur = 1200;
-        const tick = now => {
-            const p = Math.min((now - start) / dur, 1);
-            el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * num) + sfx;
-            if (p < 1) requestAnimationFrame(tick);
-        };
-        requestAnimationFrame(tick);
-    });
-}, { threshold: 0.5 });
-document.querySelectorAll('.stat-item').forEach(el => statObs.observe(el));
-
-// === Hero load-in animation ===
-window.addEventListener('load', () => {
-    document.body.classList.add('loaded');
-    const anim = (sel, delay, ty = 30) => {
-        const el = document.querySelector(sel);
-        if (!el) return;
-        el.style.opacity = '0'; el.style.transform = `translateY(${ty}px)`;
-        setTimeout(() => {
-            el.style.transition = 'opacity 1s cubic-bezier(0.4,0,0.2,1), transform 1s cubic-bezier(0.4,0,0.2,1)';
-            el.style.opacity = '1'; el.style.transform = 'translateY(0)';
-        }, delay);
-    };
-    anim('.hero-title-line', 100, 40);
-    anim('.hero-subtitle', 300);
-    anim('.hero-location', 400);
-    anim('.hero-description', 550);
-    anim('.hero-stats', 700);
-});
-
-// === Confetti on form success ===
+// ============================================
+// 11. CONTACT FORM + CONFETTI
+// ============================================
 function launchConfetti() {
-    const colors = ['#7877c6','#a78bfa','#38bdf8','#f0abfc','#fbbf24','#34d399'];
-    for (let i = 0; i < 60; i++) {
-        const p = document.createElement('div');
-        p.className = 'confetti-piece';
-        const c = colors[Math.floor(Math.random() * colors.length)], s = 5 + Math.random() * 7;
-        p.style.cssText = `left:${30+Math.random()*40}%;bottom:2rem;width:${s}px;height:${s*(0.4+Math.random()*0.6)}px;background:${c};--tx:${(Math.random()-0.5)*300}px;--ty:${-(120+Math.random()*200)}px;--rot:${Math.random()*720}deg;animation-delay:${Math.random()*250}ms;border-radius:${Math.random()>0.5?'50%':'2px'}`;
+    const colors = ['#7c6aef','#a78bfa','#38bdf8','#f0abfc','#fbbf24','#34d399'];
+    for (let i = 0; i < 50; i++) {
+        const p = document.createElement('div'); p.className = 'confetti-piece';
+        const s = 5 + Math.random() * 7;
+        p.style.cssText = `left:${30+Math.random()*40}%;bottom:2rem;width:${s}px;height:${s*(0.4+Math.random()*0.6)}px;background:${colors[Math.floor(Math.random()*colors.length)]};--tx:${(Math.random()-0.5)*300}px;--ty:${-(120+Math.random()*200)}px;--rot:${Math.random()*720}deg;animation-delay:${Math.random()*200}ms;border-radius:${Math.random()>.5?'50%':'2px'}`;
         document.querySelector('.contact-form-section')?.appendChild(p);
         p.addEventListener('animationend', () => p.remove());
     }
 }
 
-// === Contact form ===
 const contactForm = document.getElementById('contact-form');
 const submitBtn = document.getElementById('submit-btn');
 const formStatus = document.getElementById('form-status');
@@ -205,20 +248,21 @@ if (contactForm) {
         try {
             const r = await fetch(contactForm.action, { method: 'POST', body: new FormData(contactForm), headers: { Accept: 'application/json' } });
             if (r.ok) { formStatus.className = 'form-status success'; formStatus.textContent = '🎉 Message sent!'; contactForm.reset(); launchConfetti(); }
-            else { formStatus.className = 'form-status error'; formStatus.textContent = 'Something went wrong. Try again.'; }
-        } catch { formStatus.className = 'form-status error'; formStatus.textContent = 'Network error. Check your connection.'; }
+            else { formStatus.className = 'form-status error'; formStatus.textContent = 'Something went wrong.'; }
+        } catch { formStatus.className = 'form-status error'; formStatus.textContent = 'Network error.'; }
         finally { submitBtn.disabled = false; submitBtn.querySelector('.submit-text').textContent = 'Send Message'; }
     });
 }
 
-// === Mobile menu ===
+// ============================================
+// 12. MOBILE MENU
+// ============================================
 const initMobile = () => {
     if (window.innerWidth > 768) return;
-    const nc = document.querySelector('.nav-content');
     if (document.querySelector('.mobile-menu-btn')) return;
     const btn = document.createElement('button');
     btn.className = 'mobile-menu-btn'; btn.innerHTML = '☰'; btn.setAttribute('aria-label', 'Menu');
-    nc.appendChild(btn);
+    document.querySelector('.nav-content').appendChild(btn);
     btn.addEventListener('click', () => {
         const nl = document.querySelector('.nav-links');
         nl.classList.toggle('mobile-active');
